@@ -1,0 +1,107 @@
+# Pre-built content for levels 1–5.
+# Levels 6–50 are generated via content/generate.py (Wikipedia + Claude).
+
+SEED = {
+    1: {
+        "flashcards": [
+            ("Art", "The expression of human creative skill and imagination — in painting, sculpture, music, literature, and more — producing works appreciated for beauty or emotional power."),
+            ("Fine Arts", "Disciplines like painting, sculpture, drawing, and printmaking practised primarily for aesthetic value rather than function."),
+            ("Applied Arts", "Art forms that apply design to functional objects — furniture, jewelry, ceramics, graphic design — where beauty meets utility."),
+            ("Aesthetics", "The branch of philosophy concerned with the nature of beauty and the principles behind art and taste."),
+            ("Medium", "The material and tools an artist uses to create a work — oil paint on canvas, bronze, charcoal, or pixels."),
+            ("Subject vs. Style", "Subject is what an artwork depicts; style is how the artist depicts it. Two works can share a subject but look completely different."),
+        ],
+        "questions": [
+            {"type": "mcq", "stem": "What distinguishes fine arts from applied arts?", "options": ["A. Fine arts are more expensive", "B. Fine arts are made for aesthetic appreciation, not function", "C. Applied arts require more skill", "D. Fine arts always use paint"], "answer": "B", "explanation": "Fine arts — painting, sculpture, drawing — are valued primarily for their beauty, not utility."},
+            {"type": "yesno", "stem": "Can photography be considered a visual art?", "options": ["Yes", "No"], "answer": "Yes", "explanation": "Photography is widely accepted as a visual art form, capable of expressing creativity and emotion."},
+            {"type": "fill", "stem": "The materials an artist uses to create a work are called the ___.", "options": None, "answer": "medium", "explanation": "Medium refers to the material — oil, watercolor, clay — and tools used by the artist."},
+            {"type": "single", "stem": "Which is an example of applied art?", "options": ["A. The Mona Lisa", "B. A hand-crafted ceramic mug"], "answer": "B", "explanation": "The ceramic mug is both functional and decorative — classic applied art."},
+            {"type": "mcq", "stem": "Aesthetics is a branch of:", "options": ["A. Mathematics", "B. Biology", "C. Philosophy", "D. History"], "answer": "C", "explanation": "Aesthetics belongs to philosophy, exploring what beauty is and why we find things pleasing."},
+            {"type": "yesno", "stem": "Is the subject of an artwork the same as its style?", "options": ["Yes", "No"], "answer": "No", "explanation": "Subject is what is depicted; style is how the artist depicts it — Monet and Picasso could both paint a face very differently."},
+            {"type": "fill", "stem": "The ___ of an artwork refers to what the artist chose to depict.", "options": None, "answer": "subject", "explanation": "The subject is the object, scene, or idea the artwork represents."},
+            {"type": "mcq", "stem": "Which of these is NOT typically considered a fine art?", "options": ["A. Sculpture", "B. Painting", "C. Industrial product design", "D. Printmaking"], "answer": "C", "explanation": "Industrial product design is applied art — it serves a functional purpose beyond aesthetics."},
+        ],
+    },
+    2: {
+        "flashcards": [
+            ("Line", "A continuous mark on a surface — the most basic element of art. Lines can be horizontal, vertical, diagonal, curved, thick, or thin, and can suggest movement, mood, and direction."),
+            ("Shape", "A two-dimensional area with defined edges. Shapes are geometric (circles, squares) or organic (irregular, free-form, like shapes found in nature)."),
+            ("Form", "The three-dimensional version of shape — it has height, width, and depth. In 2D art, form is suggested through shading and perspective."),
+            ("Color", "The visual result of light reflecting off surfaces. In art, color has three properties: hue (the color name), value (lightness/darkness), and saturation (intensity)."),
+            ("Texture", "The surface quality of a work — how it feels or appears to feel. Actual texture is physical; implied texture is created visually to simulate a surface."),
+            ("Space", "The area around, between, and within objects. Positive space is occupied by the subject; negative space is the empty area surrounding it."),
+            ("Value", "The lightness or darkness of a color or tone. Value creates contrast and depth, giving flat surfaces the illusion of three dimensions."),
+        ],
+        "questions": [
+            {"type": "mcq", "stem": "Which element gives sculpture its three-dimensional quality?", "options": ["A. Color", "B. Line", "C. Form", "D. Texture"], "answer": "C", "explanation": "Form describes the three-dimensional quality of an object — height, width, and depth."},
+            {"type": "fill", "stem": "The empty area surrounding the main subject is called ___ space.", "options": None, "answer": "negative", "explanation": "Negative space is the background or empty area around the subject."},
+            {"type": "yesno", "stem": "Can texture be implied visually in a flat painting rather than physically felt?", "options": ["Yes", "No"], "answer": "Yes", "explanation": "Artists use brushwork and paint application to create the illusion of texture on a flat surface."},
+            {"type": "single", "stem": "Which of these is a property of color?", "options": ["A. Form", "B. Hue"], "answer": "B", "explanation": "Hue is the actual color name (red, blue, yellow). Form is a different element entirely."},
+            {"type": "mcq", "stem": "A circle is an example of which element of art?", "options": ["A. Form", "B. Shape", "C. Texture", "D. Space"], "answer": "B", "explanation": "A circle is a two-dimensional enclosed area — making it a shape, not a form."},
+            {"type": "fill", "stem": "The lightness or darkness of a tone in art is called ___.", "options": None, "answer": "value", "explanation": "Value is one of the seven elements of art and is crucial for creating depth and drama."},
+            {"type": "mcq", "stem": "Horizontal lines in a painting most commonly suggest:", "options": ["A. Energy and tension", "B. Calmness and stability", "C. Chaos and confusion", "D. Depth only"], "answer": "B", "explanation": "Horizontal lines echo the horizon and convey rest, stability, and calm."},
+            {"type": "yesno", "stem": "Is value only relevant in black-and-white artworks?", "options": ["Yes", "No"], "answer": "No", "explanation": "Every color has a value — a light blue and a dark blue have the same hue but different values."},
+        ],
+    },
+    3: {
+        "flashcards": [
+            ("Primary Colors", "Red, yellow, and blue — the three colors from which all other colors are theoretically mixed. They cannot be created by mixing other colors."),
+            ("Secondary Colors", "Colors made by mixing two primaries: orange (red + yellow), green (yellow + blue), and violet (blue + red)."),
+            ("Tertiary Colors", "Colors created by mixing a primary with an adjacent secondary — such as red-orange, yellow-green, or blue-violet."),
+            ("Color Wheel", "A circular diagram showing color relationships, invented by Isaac Newton. Adjacent colors are analogous; opposite colors are complementary."),
+            ("Complementary Colors", "Colors directly opposite on the color wheel (e.g., red and green). Placed together, they create maximum contrast; mixed, they neutralize each other."),
+            ("Warm and Cool Colors", "Warm colors (reds, oranges, yellows) evoke energy and warmth. Cool colors (blues, greens, purples) evoke calm, distance, and serenity."),
+            ("Tint and Shade", "A tint is a color mixed with white (lighter); a shade is a color mixed with black (darker). Both alter a color's value without changing its hue."),
+        ],
+        "questions": [
+            {"type": "mcq", "stem": "What color do you get when you mix red and yellow?", "options": ["A. Green", "B. Purple", "C. Orange", "D. Brown"], "answer": "C", "explanation": "Red + yellow = orange, one of the three secondary colors."},
+            {"type": "fill", "stem": "Colors directly opposite each other on the color wheel are called ___ colors.", "options": None, "answer": "complementary", "explanation": "Complementary colors create strong contrast and make each other appear more vivid."},
+            {"type": "yesno", "stem": "Can primary colors be created by mixing other colors?", "options": ["Yes", "No"], "answer": "No", "explanation": "Primary colors are the base — they cannot be produced by mixing other colors."},
+            {"type": "single", "stem": "Which is a cool color?", "options": ["A. Orange", "B. Blue"], "answer": "B", "explanation": "Blue is a cool color, associated with calm, distance, and water."},
+            {"type": "mcq", "stem": "A 'tint' is created by adding what to a color?", "options": ["A. Black", "B. Gray", "C. White", "D. Another hue"], "answer": "C", "explanation": "Adding white to a color creates a tint — lightening it while keeping the same hue."},
+            {"type": "fill", "stem": "Red, yellow, and blue are known as the ___ colors.", "options": None, "answer": "primary", "explanation": "Primary colors are the foundation of all other colors in traditional color theory."},
+            {"type": "mcq", "stem": "The color wheel was invented by:", "options": ["A. Leonardo da Vinci", "B. Sir Isaac Newton", "C. Pablo Picasso", "D. Johannes Itten"], "answer": "B", "explanation": "Newton created the first color wheel in 1666 by refracting white light through a prism."},
+            {"type": "yesno", "stem": "Do complementary colors create contrast when placed next to each other?", "options": ["Yes", "No"], "answer": "Yes", "explanation": "Complementary colors vibrate against each other, producing maximum visual contrast."},
+        ],
+    },
+    4: {
+        "flashcards": [
+            ("Balance", "The distribution of visual weight in a composition. Symmetrical balance mirrors elements; asymmetrical balance uses different elements with equal visual 'weight'."),
+            ("Contrast", "The difference between elements — dark vs. light, rough vs. smooth, large vs. small. Contrast creates interest and draws the eye to focal points."),
+            ("Emphasis", "The principle of making one element stand out as the focal point. Achieved through color, size, position, or isolation."),
+            ("Movement", "The principle that guides the viewer's eye through the artwork in a specific path, often using line, color, or repeated shapes."),
+            ("Pattern", "The repetition of an element — shape, color, or line — to create visual rhythm. Patterns can be regular (predictable) or irregular."),
+            ("Unity", "The sense that all parts of an artwork belong together. Achieved through repetition, harmony, and continuity of elements."),
+        ],
+        "questions": [
+            {"type": "mcq", "stem": "Which principle makes one element stand out as the focal point of a composition?", "options": ["A. Pattern", "B. Unity", "C. Emphasis", "D. Balance"], "answer": "C", "explanation": "Emphasis draws the viewer's eye to a specific area, often using contrast, color, or size."},
+            {"type": "yesno", "stem": "Does symmetrical balance always mean the two halves are identical?", "options": ["Yes", "No"], "answer": "No", "explanation": "Symmetrical balance means the halves feel equal in weight, but they can differ in exact details."},
+            {"type": "fill", "stem": "The repetition of a shape or color to create visual rhythm is called ___.", "options": None, "answer": "pattern", "explanation": "Pattern is a regular or irregular repetition of elements that creates rhythm and visual interest."},
+            {"type": "single", "stem": "Which principle helps all parts of a composition feel like they belong together?", "options": ["A. Unity", "B. Contrast"], "answer": "A", "explanation": "Unity creates visual cohesion — the sense that an artwork is a complete, harmonious whole."},
+            {"type": "mcq", "stem": "Contrast in art is created by:", "options": ["A. Repeating the same element", "B. Using identical colors throughout", "C. Highlighting differences — dark vs. light, large vs. small", "D. Centering all elements"], "answer": "C", "explanation": "Contrast uses difference — between values, colors, sizes, or textures — to create visual interest."},
+            {"type": "fill", "stem": "___ guides the viewer's eye through an artwork in a specific path.", "options": None, "answer": "movement", "explanation": "Movement is a principle of design that controls how the viewer's gaze travels across the composition."},
+            {"type": "yesno", "stem": "Can asymmetrical balance feel visually stable even though the two sides are different?", "options": ["Yes", "No"], "answer": "Yes", "explanation": "Asymmetrical balance uses different elements of equal visual weight, which can feel just as stable as symmetry."},
+            {"type": "mcq", "stem": "Which principle of design is most associated with creating a sense that artwork is complete and harmonious?", "options": ["A. Emphasis", "B. Unity", "C. Movement", "D. Contrast"], "answer": "B", "explanation": "Unity binds all the elements of a composition together into a coherent whole."},
+        ],
+    },
+    5: {
+        "flashcards": [
+            ("Oil Paint", "A slow-drying paint made by suspending pigment in drying oil (usually linseed). Prized for its richness, blendability, and depth of color. Dominant in Western painting since the 15th century."),
+            ("Watercolor", "A transparent paint medium where pigment is suspended in water. Known for luminous washes and the ability to preserve the white of the paper."),
+            ("Acrylic Paint", "A fast-drying, water-soluble paint developed in the mid-20th century. Versatile — it can mimic oils or watercolors and is used on many surfaces."),
+            ("Charcoal", "A drawing medium made from burned wood. Produces rich dark marks, blends easily, and is ideal for expressive, gestural drawing and studies."),
+            ("Printmaking", "An art form in which an image is transferred from a matrix (woodblock, etching plate, screen) to paper or fabric. Allows multiple originals."),
+            ("Fresco", "A technique of mural painting on wet plaster. As the plaster dries, the pigment bonds permanently to the wall. Used by Michelangelo in the Sistine Chapel."),
+        ],
+        "questions": [
+            {"type": "mcq", "stem": "Which medium has been dominant in Western painting since the 15th century?", "options": ["A. Acrylic", "B. Watercolor", "C. Oil paint", "D. Fresco"], "answer": "C", "explanation": "Oil paint became the medium of choice in European painting from the Renaissance onward."},
+            {"type": "yesno", "stem": "Is watercolor typically transparent?", "options": ["Yes", "No"], "answer": "Yes", "explanation": "Watercolor is known for its transparency, allowing the white of the paper to show through and create luminosity."},
+            {"type": "fill", "stem": "A painting applied directly to wet plaster on a wall is called a ___.", "options": None, "answer": "fresco", "explanation": "In fresco, pigment bonds into the plaster as it dries, making it extremely durable."},
+            {"type": "single", "stem": "Which medium allows multiple copies of the same image?", "options": ["A. Fresco", "B. Printmaking"], "answer": "B", "explanation": "Printmaking transfers an image from a matrix (plate, block, screen) — enabling editions of multiple prints."},
+            {"type": "mcq", "stem": "Acrylic paint was developed in:", "options": ["A. The 15th century", "B. The 17th century", "C. The 19th century", "D. The mid-20th century"], "answer": "D", "explanation": "Acrylics emerged in the 1940s–50s as a modern, fast-drying alternative to oils."},
+            {"type": "fill", "stem": "Oil paint achieves its richness because pigment is suspended in drying ___.", "options": None, "answer": "oil", "explanation": "Linseed oil is the most common drying oil used in oil paints, giving them their characteristic depth."},
+            {"type": "yesno", "stem": "Can acrylic paint mimic the look of both oil paint and watercolor?", "options": ["Yes", "No"], "answer": "Yes", "explanation": "Used thick, acrylics resemble oils; thinned with water, they produce effects similar to watercolor."},
+            {"type": "mcq", "stem": "Charcoal is made from:", "options": ["A. Compressed pigment and wax", "B. Burned wood", "C. Clay and graphite", "D. Dried ink"], "answer": "B", "explanation": "Charcoal is carbonized wood — burned in a low-oxygen environment to produce rich, dark drawing sticks."},
+        ],
+    },
+}

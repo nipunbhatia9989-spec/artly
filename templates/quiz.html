@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+{% block title %}Quiz: {{ level.title }} — Artly{% endblock %}
+
+{% block content %}
+<div class="quiz-container">
+  <div class="quiz-header">
+    <a href="{{ url_for('main.level', level_id=level.id) }}" class="back-link">← Review cards</a>
+    <h2>Quiz: {{ level.title }}</h2>
+    <div class="quiz-progress-wrap">
+      <div class="quiz-progress-bar">
+        <div class="quiz-progress-fill" id="quizProgress" style="width: 0%"></div>
+      </div>
+      <span id="quizCounter">Question 1 of {{ questions_data|length }}</span>
+    </div>
+  </div>
+
+  <div id="quizArea"></div>
+
+  <div id="resultsArea" class="results hidden"></div>
+</div>
+
+<script>
+const LEVEL_ID = {{ level.id }};
+const QUESTIONS = {{ questions_data | tojson }};
+const HOME_URL = "{{ url_for('main.home') }}";
+const SUBMIT_URL = "{{ url_for('main.submit_quiz', level_id=level.id) }}";
+const NEXT_LEVEL_URL = "{{ url_for('main.level', level_id=level.id + 1) if level.id < 50 else url_for('main.home') }}";
+
+let current = 0;
+const answers = {};
+
+function renderQuestion() {
+  const q = QUESTIONS[current];
+  const area = document.getElementById('quizArea');
+  const pct = Math.round(current / QUESTIONS.length * 100);
+  document.getElementById('quizProgress').style.width = pct + '%';
+  document.getElementById('quizCounter').textContent = `Question ${current + 1} of ${QUESTIONS.length}`;
+
+  let html = `<div class="question-card" id="questionCard">
+    <div class="question-stem">${q.stem}</div>
+    <div class="question-answers" id="answers">`;
+
+  if (q.type === 'fill') {
+    html += `<input type="text" id="fillInput" class="fill-input" placeholder="Type your answer..." autocomplete="off">`;
+  } else {
+    q.options.forEach((opt, i) => {
+      html += `<button class="answer-btn" data-value="${opt.startsWith('A.') || opt.startsWith('B.') || opt.startsWith('C.') || opt.startsWith('D.') ? opt[0] : opt}"
+        onclick="selectAnswer(this)">${opt}</button>`;
+    });
+  }
+
+  html += `</div>
+    <div class="feedback hidden" id="feedback"></div>
+    <div class="question-actions">
+      <button class="btn btn-primary" id="btnCheck" onclick="checkAnswer()" disabled>Check Answer</button>
+    </div>
+  </div>`;
+
+  area.innerHTML = html;
+
+  if (q.type === 'fill') {
+    const input = document.getElementById('fillInput');
+    input.addEventListener('input', () => {
+      document.getElementById('btnCheck').disabled = input.value.trim() === '';
+    });
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !document.getElementById('btnCheck').disabled) checkAnswer();
+    });
+  }
+}
+
+function selectAnswer(btn) {
+  document.querySelectorAll('.answer-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById('btnCheck').disabled = false;
+}
+
+function getUserAnswer() {
+  const q = QUESTIONS[current];
+  if (q.type === 'fill') {
+    return document.getElementById('fillInput').value.trim();
+  }
+  const sel = document.querySelector('.answer-btn.selected');
+  return sel ? sel.dataset.value : '';
+}
+
+function checkAnswer() {
+  const q = QUESTIONS[current];
+  const userAns = getUserAnswer();
+  const correct = userAns.trim().toLowerCase() === q.answer.trim().toLowerCase();
+  answers[q.id] = userAns;
+
+  const feedback = document.getElementById('feedback');
+  feedback.className = `feedback ${correct ? 'correct' : 'incorrect'}`;
+  feedback.innerHTML = `
+    <div class="feedback-icon">${correct ? '✓ Correct!' : '✗ Not quite'}</div>
+    ${!correct ? `<div class="feedback-correct">Correct answer: <strong>${q.answer}</strong></div>` : ''}
+    ${q.explanation ? `<div class="feedback-explain">${q.explanation}</div>` : ''}
+  `;
+  feedback.classList.remove('hidden');
+
+  document.getElementById('btnCheck').style.display = 'none';
+  document.querySelectorAll('.answer-btn').forEach(b => b.disabled = true);
+  if (document.getElementById('fillInput')) document.getElementById('fillInput').disabled = true;
+
+  const isLast = current === QUESTIONS.length - 1;
+  const nextBtn = document.createElement('button');
+  nextBtn.className = 'btn btn-primary';
+  nextBtn.textContent = isLast ? 'See Results' : 'Next →';
+  nextBtn.onclick = isLast ? submitQuiz : nextQuestion;
+  document.querySelector('.question-actions').appendChild(nextBtn);
+}
+
+function nextQuestion() {
+  current++;
+  renderQuestion();
+}
+
+async function submitQuiz() {
+  document.getElementById('quizArea').innerHTML = '<div class="loading">Calculating results…</div>';
+  const resp = await fetch(SUBMIT_URL, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(answers),
+  });
+  const data = await resp.json();
+  showResults(data);
+}
+
+function showResults(data) {
+  document.getElementById('quizArea').innerHTML = '';
+  document.getElementById('quizProgress').style.width = '100%';
+  document.getElementById('quizCounter').textContent = 'Complete!';
+
+  const pct = Math.round(data.score * 100);
+  const passed = data.passed;
+  const area = document.getElementById('resultsArea');
+  area.classList.remove('hidden');
+
+  area.innerHTML = `
+    <div class="results-score ${passed ? 'passed' : 'failed'}">
+      <div class="score-circle">${pct}%</div>
+      <div class="score-label">${passed ? '🎉 Level Complete!' : 'Keep trying!'}</div>
+      <div class="score-detail">${data.correct} of ${data.total} correct · ${passed ? '+' + data.xp + ' XP' : 'Need 70% to pass'}</div>
+    </div>
+    <div class="results-actions">
+      ${passed && ${level.id} < 50 ? `<a href="${NEXT_LEVEL_URL}" class="btn btn-success btn-lg">Next Level →</a>` : ''}
+      ${!passed ? `<a href="${window.location.href}" class="btn btn-primary">Try Again</a>` : ''}
+      <a href="${HOME_URL}" class="btn btn-ghost">Back to Map</a>
+    </div>
+    <div class="results-breakdown">
+      <h3>Question Breakdown</h3>
+      ${data.results.map((r, i) => `
+        <div class="breakdown-item ${r.correct ? 'correct' : 'incorrect'}">
+          <span class="breakdown-icon">${r.correct ? '✓' : '✗'}</span>
+          <span class="breakdown-q">Q${i + 1}: ${r.correct ? 'Correct' : `Your answer: "${r.user_answer}" · Correct: "${r.correct_answer}"`}</span>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+renderQuestion();
+</script>
+{% endblock %}

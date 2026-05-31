@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Artly — Learn Art, One Card at a Time{% endblock %}
+
+{% block content %}
+<div class="landing">
+  <div class="landing-hero">
+    <div class="landing-badge">50 levels · Free · No experience needed</div>
+    <h1 class="landing-title">Art history, theory&nbsp;&amp;&nbsp;movements —<br>learned in minutes a&nbsp;day.</h1>
+    <p class="landing-sub">Flash cards, quizzes, and a structured path from cave paintings to contemporary art. Sign in with Google to start your first lesson.</p>
+    <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-lg">
+      <svg width="20" height="20" viewBox="0 0 48 48" style="vertical-align:middle;margin-right:8px"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.34-8.16 2.34-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+      Continue with Google
+    </a>
+  </div>
+
+  <div class="features">
+    <div class="feature-card">
+      <div class="feature-icon">🃏</div>
+      <h3>Flash Cards</h3>
+      <p>Each level starts with a deck of beautifully designed cards. Flip to reveal the concept, absorb it, move on.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🧠</div>
+      <h3>Practice Quizzes</h3>
+      <p>Multiple choice, fill-in-the-blank, and yes/no questions lock in what you've learned. Pass to unlock the next level.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🗺️</div>
+      <h3>50 Levels</h3>
+      <p>From prehistoric cave paintings to digital art and NFTs — a complete journey through art history and theory.</p>
+    </div>
+  </div>
+
+  <div class="curriculum-preview">
+    <h2>What you'll learn</h2>
+    <div class="curriculum-grid">
+      <div class="curriculum-item"><span class="level-dot beginner"></span> Foundations — color, elements, composition</div>
+      <div class="curriculum-item"><span class="level-dot ancient"></span> Ancient — Egyptian, Greek, Roman, Byzantine</div>
+      <div class="curriculum-item"><span class="level-dot renaissance"></span> Renaissance — da Vinci, Michelangelo, Raphael</div>
+      <div class="curriculum-item"><span class="level-dot modern"></span> Modern — Impressionism, Cubism, Surrealism</div>
+      <div class="curriculum-item"><span class="level-dot contemporary"></span> Contemporary — Pop Art, Digital Art, Street Art</div>
+      <div class="curriculum-item"><span class="level-dot artists"></span> Artists — Van Gogh, Picasso, Warhol, Dalí &amp; more</div>
+    </div>
+  </div>
+</div>
+{% endblock %}

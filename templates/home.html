@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Artly — Your Journey{% endblock %}
+
+{% block content %}
+<div class="home-header">
+  <div class="home-welcome">
+    <img src="{{ current_user.picture or '' }}" class="avatar-lg" alt="">
+    <div>
+      <h2>Welcome back, {{ current_user.name.split()[0] }}!</h2>
+      <div class="home-stats">
+        <span class="stat"><strong>{{ completed_count }}</strong> / 50 levels complete</span>
+        <span class="stat-sep">·</span>
+        <span class="stat"><strong>{{ total_xp }}</strong> XP earned</span>
+      </div>
+    </div>
+  </div>
+  <div class="progress-bar-outer">
+    <div class="progress-bar-inner" style="width: {{ (completed_count / 50 * 100)|round|int }}%"></div>
+  </div>
+</div>
+
+<div class="level-map">
+  {% for item in level_data %}
+    {% set level = item.level %}
+    {% set status = item.status %}
+    <a href="{% if status != 'locked' %}{{ url_for('main.level', level_id=level.id) }}{% else %}#{% endif %}"
+       class="level-node {{ status }}"
+       {% if status == 'locked' %}aria-disabled="true"{% endif %}
+       title="{{ level.title }}">
+      <div class="level-num">
+        {% if status == 'completed' %}✓
+        {% elif status == 'locked' %}🔒
+        {% else %}{{ level.id }}{% endif %}
+      </div>
+      <div class="level-title">{{ level.title }}</div>
+      <div class="level-meta">
+        {% for _ in range(level.difficulty) %}★{% endfor %}{% for _ in range(5 - level.difficulty) %}☆{% endfor %}
+        · {{ level.xp_reward }} XP
+      </div>
+      {% if item.progress and item.progress.quiz_score is not none %}
+        <div class="level-score">Best: {{ (item.progress.quiz_score * 100)|round|int }}%</div>
+      {% endif %}
+    </a>
+  {% endfor %}
+</div>
+{% endblock %}

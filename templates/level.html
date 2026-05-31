@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block title %}Level {{ level.id }}: {{ level.title }} — Artly{% endblock %}
+
+{% block content %}
+<div class="lesson-container">
+  <div class="lesson-header">
+    <a href="{{ url_for('main.home') }}" class="back-link">← Back</a>
+    <div class="lesson-title-block">
+      <span class="lesson-badge">Level {{ level.id }}</span>
+      <h1>{{ level.title }}</h1>
+      <p class="lesson-desc">{{ level.description }}</p>
+    </div>
+    <div class="lesson-difficulty">
+      {% for _ in range(level.difficulty) %}★{% endfor %}{% for _ in range(5 - level.difficulty) %}☆{% endfor %}
+    </div>
+  </div>
+
+  {% if not flashcards %}
+    <div class="empty-state">
+      <p>No flashcards yet for this level.</p>
+      <p><small>Run <code>python -m content.generate --level {{ level.id }}</code> to generate content.</small></p>
+    </div>
+  {% else %}
+    <div class="flashcard-progress">
+      <div class="fc-progress-bar">
+        <div class="fc-progress-fill" id="fcProgressFill" style="width: 0%"></div>
+      </div>
+      <span id="fcCounter">1 / {{ flashcards|length }}</span>
+    </div>
+
+    <div class="flashcard-area">
+      {% for card in flashcards %}
+        <div class="flashcard {% if not loop.first %}hidden{% endif %}" data-index="{{ loop.index0 }}">
+          <div class="card-inner" id="cardInner{{ loop.index0 }}">
+            <div class="card-front">
+              <div class="card-label">TERM</div>
+              <div class="card-text">{{ card.front }}</div>
+              <div class="card-hint">Click to reveal</div>
+            </div>
+            <div class="card-back">
+              <div class="card-label">DEFINITION</div>
+              <div class="card-text">{{ card.back }}</div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="flashcard-controls">
+      <button class="btn btn-ghost" id="btnPrev" onclick="prevCard()" disabled>← Prev</button>
+      <button class="btn btn-ghost" id="btnFlip" onclick="flipCard()">Flip card</button>
+      <button class="btn btn-primary" id="btnNext" onclick="nextCard()">Next →</button>
+    </div>
+
+    <form method="post" action="{{ url_for('main.complete_flashcards', level_id=level.id) }}" id="completeForm">
+      <button type="submit" class="btn btn-success btn-lg" id="btnStartQuiz" style="display:none; margin: 2rem auto; display: none;">
+        I've studied these — take the quiz →
+      </button>
+    </form>
+  {% endif %}
+</div>
+
+<script>
+  const TOTAL = {{ flashcards|length }};
+  let current = 0;
+  let flipped = false;
+
+  function updateUI() {
+    document.querySelectorAll('.flashcard').forEach((el, i) => {
+      el.classList.toggle('hidden', i !== current);
+    });
+    document.getElementById('fcCounter').textContent = `${current + 1} / ${TOTAL}`;
+    const pct = Math.round((current + 1) / TOTAL * 100);
+    document.getElementById('fcProgressFill').style.width = pct + '%';
+    document.getElementById('btnPrev').disabled = current === 0;
+
+    const isLast = current === TOTAL - 1;
+    document.getElementById('btnNext').textContent = isLast ? '✓ Done' : 'Next →';
+
+    if (isLast && flipped) {
+      document.getElementById('btnStartQuiz').style.display = 'block';
+    }
+  }
+
+  function flipCard() {
+    const inner = document.getElementById('cardInner' + current);
+    inner.classList.toggle('flipped');
+    flipped = inner.classList.contains('flipped');
+    if (current === TOTAL - 1 && flipped) {
+      document.getElementById('btnStartQuiz').style.display = 'block';
+    }
+  }
+
+  function nextCard() {
+    if (current < TOTAL - 1) {
+      const inner = document.getElementById('cardInner' + current);
+      inner.classList.remove('flipped');
+      current++;
+      flipped = false;
+      updateUI();
+    } else {
+      document.getElementById('btnStartQuiz').style.display = 'block';
+      document.getElementById('btnStartQuiz').scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  function prevCard() {
+    if (current > 0) {
+      const inner = document.getElementById('cardInner' + current);
+      inner.classList.remove('flipped');
+      current--;
+      flipped = false;
+      updateUI();
+    }
+  }
+
+  // Click card to flip
+  document.querySelectorAll('.flashcard').forEach(card => {
+    card.addEventListener('click', flipCard);
+  });
+</script>
+{% endblock %}

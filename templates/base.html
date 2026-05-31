@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Artly — Learn Art{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% block head %}{% endblock %}
+</head>
+<body>
+
+<nav class="navbar">
+  <a class="navbar-brand" href="{{ url_for('main.home') if current_user.is_authenticated else url_for('main.landing') }}">
+    🎨 Artly
+  </a>
+  <div class="navbar-right">
+    {% if current_user.is_authenticated %}
+      {% if current_user.email in config.get('ADMIN_EMAILS', []) %}
+        <a href="{{ url_for('admin.dashboard') }}" class="nav-link">Admin</a>
+      {% endif %}
+      <img src="{{ current_user.picture or '' }}" class="avatar" alt="{{ current_user.name }}">
+      <a href="{{ url_for('auth.logout') }}" class="nav-link">Sign out</a>
+    {% endif %}
+  </div>
+</nav>
+
+<main class="main-content">
+  {% block content %}{% endblock %}
+</main>
+
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

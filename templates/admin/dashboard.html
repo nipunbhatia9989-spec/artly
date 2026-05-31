@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard — Artly{% endblock %}
+{% block head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="admin-container">
+  <h1 class="admin-title">📊 Admin Dashboard</h1>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-number">{{ total_users }}</div>
+      <div class="stat-label">Total Users</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">{{ users_today }}</div>
+      <div class="stat-label">Joined Today</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">{{ users_this_week }}</div>
+      <div class="stat-label">This Week</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">{{ users_this_month }}</div>
+      <div class="stat-label">This Month</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">{{ active_users }}</div>
+      <div class="stat-label">Active (7d)</div>
+    </div>
+  </div>
+
+  <div class="admin-section">
+    <h2>Signups — Last 14 Days</h2>
+    <div class="chart-wrap">
+      <canvas id="signupChart"></canvas>
+    </div>
+  </div>
+
+  <div class="admin-section">
+    <h2>Recent Signups</h2>
+    <table class="admin-table">
+      <thead><tr><th>Name</th><th>Email</th><th>Joined</th><th>Last Active</th></tr></thead>
+      <tbody>
+        {% for user in recent_users %}
+        <tr>
+          <td><img src="{{ user.picture or '' }}" class="avatar-sm"> {{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.created_at.strftime('%b %d, %Y') }}</td>
+          <td>{{ user.last_active.strftime('%b %d') }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="admin-section">
+    <h2>Level Completion Rates</h2>
+    <table class="admin-table">
+      <thead><tr><th>#</th><th>Level</th><th>Diff</th><th>Attempts</th><th>Passed</th><th>Pass Rate</th></tr></thead>
+      <tbody>
+        {% for s in level_stats %}
+        <tr>
+          <td>{{ s.level.id }}</td>
+          <td>{{ s.level.title }}</td>
+          <td>{% for _ in range(s.level.difficulty) %}★{% endfor %}</td>
+          <td>{{ s.attempts }}</td>
+          <td>{{ s.completions }}</td>
+          <td>
+            <div class="mini-bar"><div class="mini-fill" style="width:{{ s.rate }}%"></div></div>
+            {{ s.rate }}%
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+const labels = {{ signup_data | map(attribute='date') | list | tojson }};
+const counts = {{ signup_data | map(attribute='count') | list | tojson }};
+
+new Chart(document.getElementById('signupChart'), {
+  type: 'bar',
+  data: {
+    labels,
+    datasets: [{
+      label: 'New users',
+      data: counts,
+      backgroundColor: '#E63946',
+      borderRadius: 4,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+  }
+});
+</script>
+{% endblock %}
