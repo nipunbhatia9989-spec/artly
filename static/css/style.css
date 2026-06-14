@@ -307,7 +307,7 @@ body {
 
 .flashcard {
   width: 100%;
-  height: 340px;
+  height: 460px;
   cursor: pointer;
   user-select: none;
 }
@@ -340,7 +340,10 @@ body {
 }
 
 .card-front { background: var(--card); border: 2px solid var(--border); }
-.card-back { background: #f0fce8; border: 2px solid var(--green); transform: rotateY(180deg); }
+.card-back { background: #f0fce8; border: 2px solid var(--green); transform: rotateY(180deg); justify-content: flex-start; overflow: hidden; padding-top: 0; }
+.card-back-centered { justify-content: center; padding-top: 2rem; }
+.card-back .card-label, .card-back .card-text, .card-back .card-feedback { padding: 0 2rem; }
+.card-back .card-label { margin-top: 1rem; }
 
 .card-label {
   font-size: 0.65rem;
@@ -353,12 +356,14 @@ body {
 .card-back .card-label { color: var(--green); }
 
 .card-image {
-  max-height: 90px;
-  max-width: 140px;
+  width: calc(100% + 4rem);
+  margin-left: -2rem;
+  margin-top: -2rem;
+  height: 200px;
   object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 0.75rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  border-radius: var(--radius) var(--radius) 0 0;
+  margin-bottom: 1rem;
+  display: block;
 }
 
 .card-text {
