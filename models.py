@@ -73,3 +73,16 @@ class UserProgress(db.Model):
     completed_at = db.Column(db.DateTime)
 
     __table_args__ = (db.UniqueConstraint("user_id", "level_id"),)
+
+
+class Feedback(db.Model):
+    __tablename__ = "feedback"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    level_id = db.Column(db.Integer, db.ForeignKey("levels.id"), nullable=False)
+    target_type = db.Column(db.String(10), nullable=False)  # "card" or "level"
+    target_id = db.Column(db.Integer, nullable=False)
+    rating = db.Column(db.String(4))  # "up" or "down" or None
+    comment = db.Column(db.Text)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)

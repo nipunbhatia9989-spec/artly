@@ -40,6 +40,11 @@
             <div class="card-back">
               <div class="card-label">DEFINITION</div>
               <div class="card-text">{{ card.back }}</div>
+              <div class="card-feedback" onclick="event.stopPropagation()">
+                <span class="feedback-prompt">Rate this card</span>
+                <button class="thumb-btn" data-card-id="{{ card.id }}" data-rating="up" onclick="rateCard(this)">👍</button>
+                <button class="thumb-btn" data-card-id="{{ card.id }}" data-rating="down" onclick="rateCard(this)">👎</button>
+              </div>
             </div>
           </div>
         </div>
@@ -62,6 +67,8 @@
 
 <script>
   const TOTAL = {{ flashcards|length }};
+  const LEVEL_ID = {{ level.id }};
+  const FEEDBACK_URL = "{{ url_for('main.submit_feedback') }}";
   let current = 0;
   let flipped = false;
 
@@ -118,5 +125,22 @@
   document.querySelectorAll('.flashcard').forEach(card => {
     card.addEventListener('click', flipCard);
   });
+
+  function rateCard(btn) {
+    const wasActive = btn.classList.contains('active');
+    const siblings = btn.parentElement.querySelectorAll('.thumb-btn');
+    siblings.forEach(b => b.classList.remove('active'));
+    if (!wasActive) btn.classList.add('active');
+    fetch(FEEDBACK_URL, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        level_id: LEVEL_ID,
+        target_type: 'card',
+        target_id: parseInt(btn.dataset.cardId),
+        rating: wasActive ? null : btn.dataset.rating,
+      }),
+    });
+  }
 </script>
 {% endblock %}

@@ -4,7 +4,7 @@ from flask import Blueprint, abort, jsonify, redirect, render_template, request,
 from flask_login import current_user, login_required
 
 from extensions import db
-from models import Flashcard, Level, Question, UserProgress
+from models import Feedback, Flashcard, Level, Question, UserProgress
 
 main_bp = Blueprint("main", __name__)
 
@@ -170,3 +170,38 @@ def submit_quiz(level_id):
             "results": results,
         }
     )
+
+
+@main_bp.route("/feedback", methods=["POST"])
+@login_required
+def submit_feedback():
+    data = request.get_json() or {}
+    level_id = data.get("level_id")
+    target_type = data.get("target_type")
+    target_id = data.get("target_id")
+    rating = data.get("rating") or None
+    comment = (data.get("comment") or "").strip() or None
+
+    if not level_id or target_type not in ("card", "level") or target_id is None:
+        return jsonify({"ok": False}), 400
+
+    existing = Feedback.query.filter_by(
+        user_id=current_user.id, target_type=target_type, target_id=target_id
+    ).first()
+    if existing:
+        if rating is not None:
+            existing.rating = rating
+        if comment is not None:
+            existing.comment = comment
+    else:
+        db.session.add(Feedback(
+            user_id=current_user.id,
+            level_id=level_id,
+            target_type=target_type,
+            target_id=target_id,
+            rating=rating,
+            comment=comment,
+        ))
+
+    db.session.commit()
+    return jsonify({"ok": True})

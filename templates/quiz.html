@@ -25,6 +25,7 @@ const QUESTIONS = {{ questions_data | tojson }};
 const HOME_URL = "{{ url_for('main.home') }}";
 const SUBMIT_URL = "{{ url_for('main.submit_quiz', level_id=level.id) }}";
 const NEXT_LEVEL_URL = "{{ url_for('main.level', level_id=level.id + 1) if level.id < 50 else url_for('main.home') }}";
+const FEEDBACK_URL = "{{ url_for('main.submit_feedback') }}";
 
 let current = 0;
 const answers = {};
@@ -144,7 +145,7 @@ function showResults(data) {
       <div class="score-detail">${data.correct} of ${data.total} correct · ${passed ? '+' + data.xp + ' XP' : 'Need 70% to pass'}</div>
     </div>
     <div class="results-actions">
-      ${passed && ${level.id} < 50 ? `<a href="${NEXT_LEVEL_URL}" class="btn btn-success btn-lg">Next Level →</a>` : ''}
+      ${passed && LEVEL_ID < 50 ? `<a href="${NEXT_LEVEL_URL}" class="btn btn-success btn-lg">Next Level →</a>` : ''}
       ${!passed ? `<a href="${window.location.href}" class="btn btn-primary">Try Again</a>` : ''}
       <a href="${HOME_URL}" class="btn btn-ghost">Back to Map</a>
     </div>
@@ -157,7 +158,45 @@ function showResults(data) {
         </div>
       `).join('')}
     </div>
+    <div class="level-feedback" id="levelFeedback">
+      <h3>How was this level?</h3>
+      <div class="thumb-group">
+        <button class="thumb-btn" data-rating="up" onclick="rateLevelFeedback(this)">👍</button>
+        <button class="thumb-btn" data-rating="down" onclick="rateLevelFeedback(this)">👎</button>
+      </div>
+      <textarea class="feedback-comment" id="levelComment" placeholder="Any thoughts? (optional)"></textarea>
+      <button class="btn btn-ghost" onclick="submitLevelFeedback()">Send feedback</button>
+      <div class="feedback-sent hidden" id="feedbackSent">Thanks for the feedback!</div>
+    </div>
   `;
+}
+
+function rateLevelFeedback(btn) {
+  const wasActive = btn.classList.contains('active');
+  document.querySelectorAll('#levelFeedback .thumb-btn').forEach(b => b.classList.remove('active'));
+  if (!wasActive) btn.classList.add('active');
+}
+
+async function submitLevelFeedback() {
+  const ratingBtn = document.querySelector('#levelFeedback .thumb-btn.active');
+  const comment = document.getElementById('levelComment').value.trim();
+  if (!ratingBtn && !comment) return;
+
+  await fetch(FEEDBACK_URL, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      level_id: LEVEL_ID,
+      target_type: 'level',
+      target_id: LEVEL_ID,
+      rating: ratingBtn ? ratingBtn.dataset.rating : null,
+      comment: comment || null,
+    }),
+  });
+
+  document.getElementById('levelFeedback').querySelector('.btn').style.display = 'none';
+  document.getElementById('levelComment').style.display = 'none';
+  document.getElementById('feedbackSent').classList.remove('hidden');
 }
 
 renderQuestion();
