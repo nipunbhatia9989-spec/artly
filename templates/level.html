@@ -38,6 +38,9 @@
               <div class="card-hint">Click to reveal</div>
             </div>
             <div class="card-back">
+              {% if card.image_url %}
+              <img class="card-image" src="{{ card.image_url }}" alt="{{ card.front }}" loading="lazy" onerror="this.style.display='none'">
+              {% endif %}
               <div class="card-label">DEFINITION</div>
               <div class="card-text">{{ card.back }}</div>
               <div class="card-feedback" onclick="event.stopPropagation()">

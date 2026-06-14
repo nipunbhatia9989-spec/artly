@@ -43,6 +43,7 @@ class Flashcard(db.Model):
     level_id = db.Column(db.Integer, db.ForeignKey("levels.id"), nullable=False)
     front = db.Column(db.Text, nullable=False)
     back = db.Column(db.Text, nullable=False)
+    image_url = db.Column(db.String(500))
     order = db.Column(db.Integer, default=0)
 
 

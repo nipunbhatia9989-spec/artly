@@ -43,11 +43,42 @@ def create_app():
 
 
 def _auto_seed():
+    _migrate()
     from models import Level
     if Level.query.count() == 0:
         from content.seed import seed
         from flask import current_app
         seed(current_app._get_current_object())
+    else:
+        _patch_images()
+
+
+def _migrate():
+    from sqlalchemy import text
+    for stmt in [
+        "ALTER TABLE flashcards ADD COLUMN image_url VARCHAR(500)",
+        "ALTER TABLE feedback ADD COLUMN image_url VARCHAR(500)",  # no-op guard
+    ]:
+        try:
+            db.session.execute(text(stmt))
+            db.session.commit()
+        except Exception:
+            db.session.rollback()
+
+
+def _patch_images():
+    from models import Flashcard
+    from content.seed_data import SEED
+    if Flashcard.query.filter(Flashcard.image_url.isnot(None)).count() > 0:
+        return
+    for level_id, content in SEED.items():
+        for i, card_data in enumerate(content["flashcards"]):
+            if len(card_data) < 3 or not card_data[2]:
+                continue
+            fc = Flashcard.query.filter_by(level_id=level_id, order=i).first()
+            if fc:
+                fc.image_url = card_data[2]
+    db.session.commit()
 
 
 if __name__ == "__main__":
