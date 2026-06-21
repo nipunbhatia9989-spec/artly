@@ -30,7 +30,7 @@
 
     <div class="flashcard-area">
       {% for card in flashcards %}
-        <div class="flashcard {% if not loop.first %}hidden{% endif %}" data-index="{{ loop.index0 }}">
+        <div class="flashcard {% if card.image_url %}has-image{% endif %} {% if not loop.first %}hidden{% endif %}" data-index="{{ loop.index0 }}">
           <div class="card-inner" id="cardInner{{ loop.index0 }}">
             <div class="card-front">
               <div class="card-label">TERM</div>
