@@ -1,6 +1,6 @@
 # Pre-built content for levels 1–5.
 # Levels 6–50 are generated via content/generate.py (Wikipedia + Claude).
-# Flashcard tuples: (front, back) or (front, back, image_url)
+# Flashcard tuples: (front, back) or (front, back, image_url) or (front, back, image_url, caption)
 # image_url uses Wikimedia Commons Special:FilePath — stable redirect URLs.
 
 _W = "https://commons.wikimedia.org/wiki/Special:FilePath/"
@@ -8,10 +8,10 @@ _W = "https://commons.wikimedia.org/wiki/Special:FilePath/"
 SEED = {
     1: {
         "flashcards": [
-            ("Art", "The expression of human creative skill and imagination — in painting, sculpture, music, literature, and more — producing works appreciated for beauty or emotional power.", _W + "Botticelli-primavera.jpg?width=300"),
-            ("Fine Arts", "Disciplines like painting, sculpture, drawing, and printmaking practised primarily for aesthetic value rather than function.", _W + "Mona_Lisa,_by_Leonardo_da_Vinci,_from_C2RMF_retouched.jpg?width=200"),
-            ("Applied Arts", "Art forms that apply design to functional objects — furniture, jewelry, ceramics, graphic design — where beauty meets utility.", _W + "William_Morris_design_for_Trellis_wallpaper_1862.jpg?width=300"),
-            ("Aesthetics", "The branch of philosophy concerned with the nature of beauty and the principles behind art and taste.", _W + "Parthenon-Athens.jpg?width=300"),
+            ("Art", "The expression of human creative skill and imagination — in painting, sculpture, music, literature, and more — producing works appreciated for beauty or emotional power.", _W + "Botticelli-primavera.jpg?width=300", "Botticelli's Primavera (c.1482) — one of the most celebrated works of fine art in Western history, created purely to be experienced as beauty."),
+            ("Fine Arts", "Disciplines like painting, sculpture, drawing, and printmaking practised primarily for aesthetic value rather than function.", _W + "Mona_Lisa,_by_Leonardo_da_Vinci,_from_C2RMF_retouched.jpg?width=200", "Da Vinci's Mona Lisa — the archetype of fine art: made for aesthetic experience alone, not to serve any practical function."),
+            ("Applied Arts", "Art forms that apply design to functional objects — furniture, jewelry, ceramics, graphic design — where beauty meets utility.", _W + "William_Morris_design_for_Trellis_wallpaper_1862.jpg?width=300", "William Morris's Trellis wallpaper (1862) — beautiful art applied to an everyday object. This is applied art: beauty meets function."),
+            ("Aesthetics", "The branch of philosophy concerned with the nature of beauty and the principles behind art and taste.", _W + "Parthenon-Athens.jpg?width=300", "The Parthenon, Athens — designed to embody perfect proportion and beauty. Why does it feel harmonious? That question is aesthetics."),
             ("Medium", "The material and tools an artist uses to create a work — oil paint on canvas, bronze, charcoal, or pixels."),
             ("Subject vs. Style", "Subject is what an artwork depicts; style is how the artist depicts it. Two works can share a subject but look completely different."),
         ],
@@ -28,13 +28,13 @@ SEED = {
     },
     2: {
         "flashcards": [
-            ("Line", "A continuous mark on a surface — the most basic element of art. Lines can be horizontal, vertical, diagonal, curved, thick, or thin, and can suggest movement, mood, and direction.", _W + "Piet_Mondriaan,_1942_-_Broadway_Boogie_Woogie.jpg?width=300"),
-            ("Shape", "A two-dimensional area with defined edges. Shapes are geometric (circles, squares) or organic (irregular, free-form, like shapes found in nature).", _W + "La_danse_(I)_by_Matisse.jpg?width=300"),
-            ("Form", "The three-dimensional version of shape — it has height, width, and depth. In 2D art, form is suggested through shading and perspective.", _W + "The_Thinker,_Rodin.jpg?width=300"),
-            ("Color", "The visual result of light reflecting off surfaces. In art, color has three properties: hue (the color name), value (lightness/darkness), and saturation (intensity).", _W + "Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg?width=300"),
-            ("Texture", "The surface quality of a work — how it feels or appears to feel. Actual texture is physical; implied texture is created visually to simulate a surface.", _W + "Van_Gogh_-_Wheat_Field_with_Crows.jpg?width=300"),
-            ("Space", "The area around, between, and within objects. Positive space is occupied by the subject; negative space is the empty area surrounding it.", _W + "Raphael_School_of_Athens.jpg?width=300"),
-            ("Value", "The lightness or darkness of a color or tone. Value creates contrast and depth, giving flat surfaces the illusion of three dimensions.", _W + "Rembrandt_van_Rijn_-_Self-Portrait_-_Google_Art_Project.jpg?width=300"),
+            ("Line", "A continuous mark on a surface — the most basic element of art. Lines can be horizontal, vertical, diagonal, curved, thick, or thin, and can suggest movement, mood, and direction.", _W + "Piet_Mondriaan,_1942_-_Broadway_Boogie_Woogie.jpg?width=300", "Mondrian's Broadway Boogie Woogie (1942) — nothing but lines and grids, yet they create rhythm, movement, and jazz-like energy."),
+            ("Shape", "A two-dimensional area with defined edges. Shapes are geometric (circles, squares) or organic (irregular, free-form, like shapes found in nature).", _W + "La_danse_(I)_by_Matisse.jpg?width=300", "Matisse's La Danse (1909) — simplified organic shapes define the human body. No detail, no texture — pure shape is enough."),
+            ("Form", "The three-dimensional version of shape — it has height, width, and depth. In 2D art, form is suggested through shading and perspective.", _W + "The_Thinker,_Rodin.jpg?width=300", "Rodin's The Thinker — three-dimensional form gives the figure mass, weight, and solidity that a flat shape never could."),
+            ("Color", "The visual result of light reflecting off surfaces. In art, color has three properties: hue (the color name), value (lightness/darkness), and saturation (intensity).", _W + "Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg?width=300", "Van Gogh's Starry Night — color used emotionally, not literally. The swirling blues and yellows express turbulence, not just night sky."),
+            ("Texture", "The surface quality of a work — how it feels or appears to feel. Actual texture is physical; implied texture is created visually to simulate a surface.", _W + "Van_Gogh_-_Wheat_Field_with_Crows.jpg?width=300", "Van Gogh's Wheat Field with Crows — thick impasto brushwork creates actual physical texture you could feel with your hand."),
+            ("Space", "The area around, between, and within objects. Positive space is occupied by the subject; negative space is the empty area surrounding it.", _W + "Raphael_School_of_Athens.jpg?width=300", "Raphael's School of Athens — masterful use of linear perspective creates the illusion of vast architectural space on a flat wall."),
+            ("Value", "The lightness or darkness of a color or tone. Value creates contrast and depth, giving flat surfaces the illusion of three dimensions.", _W + "Rembrandt_van_Rijn_-_Self-Portrait_-_Google_Art_Project.jpg?width=300", "Rembrandt's self-portrait — extreme darks and lights (chiaroscuro) carve out form and create psychological drama."),
         ],
         "questions": [
             {"type": "mcq", "stem": "Which element gives sculpture its three-dimensional quality?", "options": ["A. Color", "B. Line", "C. Form", "D. Texture"], "answer": "C", "explanation": "Form describes the three-dimensional quality of an object — height, width, and depth."},
@@ -49,12 +49,12 @@ SEED = {
     },
     3: {
         "flashcards": [
-            ("Primary Colors", "Red, yellow, and blue — the three colors from which all other colors are theoretically mixed. They cannot be created by mixing other colors.", _W + "Goethe_Farbenkreis_zur_Symbolisierung_des_menschlichen_Geistes-_und_Seelenlebens_1809.jpg?width=300"),
-            ("Secondary Colors", "Colors made by mixing two primaries: orange (red + yellow), green (yellow + blue), and violet (blue + red).", _W + "Itten-Farbkreis.jpg?width=300"),
+            ("Primary Colors", "Red, yellow, and blue — the three colors from which all other colors are theoretically mixed. They cannot be created by mixing other colors.", _W + "Goethe_Farbenkreis_zur_Symbolisierung_des_menschlichen_Geistes-_und_Seelenlebens_1809.jpg?width=300", "Goethe's color circle (1809) — an early visual map of primary colors and the emotional qualities he associated with each."),
+            ("Secondary Colors", "Colors made by mixing two primaries: orange (red + yellow), green (yellow + blue), and violet (blue + red).", _W + "Itten-Farbkreis.jpg?width=300", "Johannes Itten's color wheel — the inner triangle shows the three primaries; the outer ring shows the secondary colors they produce when mixed."),
             ("Tertiary Colors", "Colors created by mixing a primary with an adjacent secondary — such as red-orange, yellow-green, or blue-violet."),
-            ("Color Wheel", "A circular diagram showing color relationships, invented by Isaac Newton. Adjacent colors are analogous; opposite colors are complementary.", _W + "Newton%27s_colour_circle.png?width=300"),
-            ("Complementary Colors", "Colors directly opposite on the color wheel (e.g., red and green). Placed together, they create maximum contrast; mixed, they neutralize each other.", _W + "Matisse-_The_Red_Room.jpg?width=300"),
-            ("Warm and Cool Colors", "Warm colors (reds, oranges, yellows) evoke energy and warmth. Cool colors (blues, greens, purples) evoke calm, distance, and serenity.", _W + "Claude_Monet_-_Haystacks,_end_of_summer_-_Google_Art_Project.jpg?width=300"),
+            ("Color Wheel", "A circular diagram showing color relationships, invented by Isaac Newton. Adjacent colors are analogous; opposite colors are complementary.", _W + "Newton%27s_colour_circle.png?width=300", "Newton's original color circle (1666) — created after splitting white light through a prism. The first time colors were shown as a continuous wheel."),
+            ("Complementary Colors", "Colors directly opposite on the color wheel (e.g., red and green). Placed together, they create maximum contrast; mixed, they neutralize each other.", _W + "Matisse-_The_Red_Room.jpg?width=300", "Matisse's The Red Room (1908) — red and green are complementary colors. Notice how the green tabletop and red room vibrate against each other."),
+            ("Warm and Cool Colors", "Warm colors (reds, oranges, yellows) evoke energy and warmth. Cool colors (blues, greens, purples) evoke calm, distance, and serenity.", _W + "Claude_Monet_-_Haystacks,_end_of_summer_-_Google_Art_Project.jpg?width=300", "Monet's Haystacks — the same subject in warm golden afternoon light vs. cool blue winter shadows. Warm and cool describe mood, not just temperature."),
             ("Tint and Shade", "A tint is a color mixed with white (lighter); a shade is a color mixed with black (darker). Both alter a color's value without changing its hue."),
         ],
         "questions": [
@@ -70,12 +70,12 @@ SEED = {
     },
     4: {
         "flashcards": [
-            ("Balance", "The distribution of visual weight in a composition. Symmetrical balance mirrors elements; asymmetrical balance uses different elements with equal visual 'weight'.", _W + "Da_Vinci_Vitruvian_Man.jpg?width=300"),
-            ("Contrast", "The difference between elements — dark vs. light, rough vs. smooth, large vs. small. Contrast creates interest and draws the eye to focal points.", _W + "Caravaggio_-_La_vocazione_di_san_Matteo.jpg?width=300"),
-            ("Emphasis", "The principle of making one element stand out as the focal point. Achieved through color, size, position, or isolation.", _W + "Girl_with_a_Pearl_Earring.jpg?width=300"),
-            ("Movement", "The principle that guides the viewer's eye through the artwork in a specific path, often using line, color, or repeated shapes.", _W + "Duchamp_-_Nude_Descending_a_Staircase.jpg?width=300"),
-            ("Pattern", "The repetition of an element — shape, color, or line — to create visual rhythm. Patterns can be regular (predictable) or irregular.", _W + "Arabischer_Maler_um_1237_001.jpg?width=300"),
-            ("Unity", "The sense that all parts of an artwork belong together. Achieved through repetition, harmony, and continuity of elements.", _W + "Raphael_School_of_Athens.jpg?width=300"),
+            ("Balance", "The distribution of visual weight in a composition. Symmetrical balance mirrors elements; asymmetrical balance uses different elements with equal visual 'weight'.", _W + "Da_Vinci_Vitruvian_Man.jpg?width=300", "Da Vinci's Vitruvian Man — perfect symmetrical balance. Every element on the left is mirrored exactly on the right around a central axis."),
+            ("Contrast", "The difference between elements — dark vs. light, rough vs. smooth, large vs. small. Contrast creates interest and draws the eye to focal points.", _W + "Caravaggio_-_La_vocazione_di_san_Matteo.jpg?width=300", "Caravaggio's The Calling of Saint Matthew — a shaft of light cuts through deep shadow. Maximum contrast between dark and light creates dramatic tension."),
+            ("Emphasis", "The principle of making one element stand out as the focal point. Achieved through color, size, position, or isolation.", _W + "Girl_with_a_Pearl_Earring.jpg?width=300", "Vermeer's Girl with a Pearl Earring — your eye goes immediately to her face, then the earring. The dark background isolates and emphasises the subject."),
+            ("Movement", "The principle that guides the viewer's eye through the artwork in a specific path, often using line, color, or repeated shapes.", _W + "Duchamp_-_Nude_Descending_a_Staircase.jpg?width=300", "Duchamp's Nude Descending a Staircase (1912) — multiple positions of the same figure overlaid to create the sensation of movement on a static canvas."),
+            ("Pattern", "The repetition of an element — shape, color, or line — to create visual rhythm. Patterns can be regular (predictable) or irregular.", _W + "Arabischer_Maler_um_1237_001.jpg?width=300", "Islamic geometric art — intricate repetition of geometric shapes tiles across the entire surface, creating hypnotic visual rhythm."),
+            ("Unity", "The sense that all parts of an artwork belong together. Achieved through repetition, harmony, and continuity of elements.", _W + "Raphael_School_of_Athens.jpg?width=300", "Raphael's School of Athens — dozens of figures, yet the whole feels unified through shared architecture, consistent perspective, and a harmonious palette."),
         ],
         "questions": [
             {"type": "mcq", "stem": "Which principle makes one element stand out as the focal point of a composition?", "options": ["A. Pattern", "B. Unity", "C. Emphasis", "D. Balance"], "answer": "C", "explanation": "Emphasis draws the viewer's eye to a specific area, often using contrast, color, or size."},
@@ -90,12 +90,12 @@ SEED = {
     },
     5: {
         "flashcards": [
-            ("Oil Paint", "A slow-drying paint made by suspending pigment in drying oil (usually linseed). Prized for its richness, blendability, and depth of color. Dominant in Western painting since the 15th century.", _W + "Girl_with_a_Pearl_Earring.jpg?width=300"),
-            ("Watercolor", "A transparent paint medium where pigment is suspended in water. Known for luminous washes and the ability to preserve the white of the paper.", _W + "Albrecht_D%C3%BCrer_-_Young_Hare,_1502_-_Google_Art_Project.jpg?width=300"),
-            ("Acrylic Paint", "A fast-drying, water-soluble paint developed in the mid-20th century. Versatile — it can mimic oils or watercolors and is used on many surfaces.", _W + "David_Hockney_-_A_Bigger_Splash.jpg?width=300"),
-            ("Charcoal", "A drawing medium made from burned wood. Produces rich dark marks, blends easily, and is ideal for expressive, gestural drawing and studies.", _W + "Edgar_Degas_-_Ballet_Rehearsal_on_Stage.jpg?width=300"),
-            ("Printmaking", "An art form in which an image is transferred from a matrix (woodblock, etching plate, screen) to paper or fabric. Allows multiple originals.", _W + "Great_Wave_off_Kanagawa2.jpg?width=300"),
-            ("Fresco", "A technique of mural painting on wet plaster. As the plaster dries, the pigment bonds permanently to the wall. Used by Michelangelo in the Sistine Chapel.", _W + "Michelangelo_-_Creation_of_Adam_(cropped).jpg?width=300"),
+            ("Oil Paint", "A slow-drying paint made by suspending pigment in drying oil (usually linseed). Prized for its richness, blendability, and depth of color. Dominant in Western painting since the 15th century.", _W + "Girl_with_a_Pearl_Earring.jpg?width=300", "Vermeer's Girl with a Pearl Earring — oil paint's slow drying and blendability produce the luminous, almost photographic skin tones impossible in any other medium."),
+            ("Watercolor", "A transparent paint medium where pigment is suspended in water. Known for luminous washes and the ability to preserve the white of the paper.", _W + "Albrecht_D%C3%BCrer_-_Young_Hare,_1502_-_Google_Art_Project.jpg?width=300", "Dürer's Young Hare (1502) — transparent watercolor washes layered to capture every individual hair. The white paper shining through creates the animal's luminosity."),
+            ("Acrylic Paint", "A fast-drying, water-soluble paint developed in the mid-20th century. Versatile — it can mimic oils or watercolors and is used on many surfaces.", _W + "David_Hockney_-_A_Bigger_Splash.jpg?width=300", "Hockney's A Bigger Splash — acrylics' fast drying and high saturation freeze the explosive splash in vivid, flat colour impossible in slow-drying oils."),
+            ("Charcoal", "A drawing medium made from burned wood. Produces rich dark marks, blends easily, and is ideal for expressive, gestural drawing and studies.", _W + "Edgar_Degas_-_Ballet_Rehearsal_on_Stage.jpg?width=300", "Degas's Ballet Rehearsal — charcoal's rich, smudgeable darkness captures gesture and movement with a speed and freedom that oil paint cannot match."),
+            ("Printmaking", "An art form in which an image is transferred from a matrix (woodblock, etching plate, screen) to paper or fabric. Allows multiple originals.", _W + "Great_Wave_off_Kanagawa2.jpg?width=300", "Hokusai's Great Wave (c.1831) — a woodblock print: the image carved in reverse into wood, inked, and pressed onto paper — reproduced thousands of identical times."),
+            ("Fresco", "A technique of mural painting on wet plaster. As the plaster dries, the pigment bonds permanently to the wall. Used by Michelangelo in the Sistine Chapel.", _W + "Michelangelo_-_Creation_of_Adam_(cropped).jpg?width=300", "Michelangelo's Creation of Adam — painted directly into wet plaster on the Sistine Chapel ceiling. As the plaster dried, the pigment became part of the wall permanently."),
         ],
         "questions": [
             {"type": "mcq", "stem": "Which medium has been dominant in Western painting since the 15th century?", "options": ["A. Acrylic", "B. Watercolor", "C. Oil paint", "D. Fresco"], "answer": "C", "explanation": "Oil paint became the medium of choice in European painting from the Renaissance onward."},

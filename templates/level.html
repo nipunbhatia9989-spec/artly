@@ -39,10 +39,14 @@
             </div>
             <div class="card-back {% if not card.image_url %}card-back-centered{% endif %}">
               {% if card.image_url %}
-              <img class="card-image" src="{{ card.image_url }}" alt="{{ card.front }}" loading="lazy" onerror="this.style.display='none'">
+              <img class="card-image" src="{{ card.image_url }}" alt="{{ card.front }}" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('card-back-centered'); this.parentElement.style.paddingTop='2rem'">
               {% endif %}
+              <div class="card-term">{{ card.front }}</div>
               <div class="card-label">DEFINITION</div>
               <div class="card-text">{{ card.back }}</div>
+              {% if card.image_caption %}
+              <div class="card-caption">{{ card.image_caption }}</div>
+              {% endif %}
               <div class="card-feedback" onclick="event.stopPropagation()">
                 <span class="feedback-prompt">Rate this card</span>
                 <button class="thumb-btn" data-card-id="{{ card.id }}" data-rating="up" onclick="rateCard(this)">👍</button>

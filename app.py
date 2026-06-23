@@ -57,7 +57,7 @@ def _migrate():
     from sqlalchemy import text
     for stmt in [
         "ALTER TABLE flashcards ADD COLUMN image_url VARCHAR(500)",
-        "ALTER TABLE feedback ADD COLUMN image_url VARCHAR(500)",  # no-op guard
+        "ALTER TABLE flashcards ADD COLUMN image_caption TEXT",
     ]:
         try:
             db.session.execute(text(stmt))
@@ -69,16 +69,20 @@ def _migrate():
 def _patch_images():
     from models import Flashcard
     from content.seed_data import SEED
-    if Flashcard.query.filter(Flashcard.image_url.isnot(None)).count() > 0:
-        return
+    updated = 0
     for level_id, content in SEED.items():
         for i, card_data in enumerate(content["flashcards"]):
-            if len(card_data) < 3 or not card_data[2]:
-                continue
             fc = Flashcard.query.filter_by(level_id=level_id, order=i).first()
-            if fc:
-                fc.image_url = card_data[2]
-    db.session.commit()
+            if not fc:
+                continue
+            image_url = card_data[2] if len(card_data) > 2 else None
+            image_caption = card_data[3] if len(card_data) > 3 else None
+            if fc.image_url != image_url or fc.image_caption != image_caption:
+                fc.image_url = image_url
+                fc.image_caption = image_caption
+                updated += 1
+    if updated:
+        db.session.commit()
 
 
 if __name__ == "__main__":

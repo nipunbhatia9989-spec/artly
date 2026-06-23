@@ -44,6 +44,7 @@ class Flashcard(db.Model):
     front = db.Column(db.Text, nullable=False)
     back = db.Column(db.Text, nullable=False)
     image_url = db.Column(db.String(500))
+    image_caption = db.Column(db.Text)
     order = db.Column(db.Integer, default=0)
 
 

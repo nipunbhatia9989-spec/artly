@@ -38,7 +38,8 @@ def seed(app):
             for i, card in enumerate(content["flashcards"]):
                 front, back = card[0], card[1]
                 image_url = card[2] if len(card) > 2 else None
-                db.session.add(Flashcard(level_id=level_id, front=front, back=back, image_url=image_url, order=i))
+                image_caption = card[3] if len(card) > 3 else None
+                db.session.add(Flashcard(level_id=level_id, front=front, back=back, image_url=image_url, image_caption=image_caption, order=i))
 
             for i, q in enumerate(content["questions"]):
                 db.session.add(Question(
